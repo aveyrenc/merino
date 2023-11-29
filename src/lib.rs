@@ -11,7 +11,7 @@ use std::sync::Arc;
 use std::time::Duration;
 use thiserror::Error;
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
-use tokio::net::{TcpListener, TcpStream, lookup_host};
+use tokio::net::{lookup_host, TcpListener, TcpStream};
 use tokio::time::timeout;
 
 /// Version of socks
@@ -444,13 +444,11 @@ where
 
                 trace!("Connecting to: {:?}", sock_addr);
 
-                let mut target =
-                    timeout(
-                        self.timeout,
-                        async move { TcpStream::connect(&sock_addr[..]).await },
-                    )
-                    .await
-                    .map_err(|_| MerinoError::Socks(ResponseCode::Timeout))??;
+                let mut target = timeout(self.timeout, async move {
+                    TcpStream::connect(&sock_addr[..]).await
+                })
+                .await
+                .map_err(|_| MerinoError::Socks(ResponseCode::Timeout))??;
 
                 trace!("Connected!");
 
@@ -495,7 +493,11 @@ where
 }
 
 /// Convert an address and AddrType to a SocketAddr
-async fn addr_to_socket(addr_type: &AddrType, addr: &[u8], port: u16) -> io::Result<Vec<SocketAddr>> {
+async fn addr_to_socket(
+    addr_type: &AddrType,
+    addr: &[u8],
+    port: u16,
+) -> io::Result<Vec<SocketAddr>> {
     match addr_type {
         AddrType::V6 => {
             let new_addr = (0..8)

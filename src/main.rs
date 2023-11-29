@@ -70,9 +70,13 @@ struct Opt {
 #[cfg(target_family = "unix")]
 pub mod details {
     use std::os::unix::prelude::MetadataExt;
-  
+
     // Define structs, functions, ...
-    pub fn metadata_platform(metadata:std::fs::Metadata, allow_insecure:&bool, users_file:&std::path::PathBuf) {
+    pub fn metadata_platform(
+        metadata: std::fs::Metadata,
+        allow_insecure: &bool,
+        users_file: &std::path::PathBuf,
+    ) {
         // 7 is (S_IROTH | S_IWOTH | S_IXOTH) or the "permisions for others" in unix
         if (metadata.mode() & 7) > 0 && !allow_insecure {
             error!(
@@ -92,7 +96,11 @@ pub mod details {
     // use std::os::windows::prelude::MetadataExt;
 
     // Define structs, functions, ...
-    pub fn metadata_platform(_metadata:std::fs::Metadata, _allow_insecure:&bool, _users_file:&std::path::PathBuf) {
+    pub fn metadata_platform(
+        _metadata: std::fs::Metadata,
+        _allow_insecure: &bool,
+        _users_file: &std::path::PathBuf,
+    ) {
         println!("On windows there is no metadata.mode()");
     }
 }
@@ -145,7 +153,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             });
 
             let metadata = file.metadata()?;
-            details::metadata_platform(metadata,&opt.allow_insecure,&users_file);
+            details::metadata_platform(metadata, &opt.allow_insecure, &users_file);
 
             let mut users: Vec<User> = Vec::new();
 
