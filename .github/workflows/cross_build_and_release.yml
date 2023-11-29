@@ -88,13 +88,6 @@ jobs:
             name: ${{ github.event.repository.name }}-x86_64-unknown-freebsd.tar.gz
             skip_tests: true
 
-          - os_name: NetBSD-x86_64
-            os: ubuntu-20.04
-            target: x86_64-unknown-netbsd
-            bin: ${{ github.event.repository.name }}
-            name: ${{ github.event.repository.name }}-x86_64-unknown-netbsd.tar.gz
-            skip_tests: true
-
           - os_name: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
