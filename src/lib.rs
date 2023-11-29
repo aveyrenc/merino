@@ -228,7 +228,7 @@ impl Merino {
         while let Ok((stream, client_addr)) = self.listener.accept().await {
             let users = self.users.clone();
             let auth_methods = self.auth_methods.clone();
-            let timeout = self.timeout.clone();
+            let timeout = self.timeout;
             tokio::spawn(async move {
                 let mut client = SOCKClient::new(stream, users, auth_methods, timeout);
                 match client.init().await {
@@ -285,8 +285,7 @@ where
     pub fn new_no_auth(stream: T, timeout: Duration) -> Self {
         // FIXME: use option here
         let authed_users: Arc<Vec<User>> = Arc::new(Vec::new());
-        let mut no_auth: Vec<u8> = Vec::new();
-        no_auth.push(AuthMethods::NoAuth as u8);
+        let no_auth: Vec<u8> = vec![AuthMethods::NoAuth as u8];
         let auth_methods: Arc<Vec<u8>> = Arc::new(no_auth);
 
         SOCKClient {
@@ -427,8 +426,6 @@ where
         debug!("Starting to relay data");
 
         let req = SOCKSReq::from_stream(&mut self.stream).await?;
-
-        if req.addr_type == AddrType::V6 {}
 
         // Log Request
         let displayed_addr = pretty_print_addr(&req.addr_type, &req.addr);
