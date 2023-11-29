@@ -10,9 +10,9 @@
 
 [![Crates.io](https://img.shields.io/crates/v/merino.svg)](https://crates.io/crates/merino)
 [![stego](https://docs.rs/merino/badge.svg)](https://docs.rs/merino)
-[![License](https://img.shields.io/crates/l/pbr.svg)](https://github.com/ajmwagar/merino/blob/master/LICENSE.md)
-[![Build Status](https://travis-ci.org/ajmwagar/merino.svg?branch=master)](https://travis-ci.org/ajmwagar/merino)
-[![dependency status](https://deps.rs/repo/github/ajmwagar/merino/status.svg)](https://deps.rs/repo/github/ajmwagar/merino)
+[![License](https://img.shields.io/crates/l/pbr.svg)](https://github.com/aveyrenc/merino/blob/master/LICENSE.md)
+[![Build Status](https://github.com/aveyrenc/merino/actions/workflows/cross_build_and_release.yml/badge.svg)](https://github.com/aveyrenc/merino/actions/workflows/cross_build_and_release.yml)
+[![dependency status](https://deps.rs/repo/github/aveyrenc/merino/status.svg)](https://deps.rs/repo/github/aveyrenc/merino)
 
 ## 🎁 Features
 
@@ -38,7 +38,7 @@ cargo install merino
 OR
 
 ```bash
-git clone https://github.com/ajmwagar/merino
+git clone https://github.com/aveyrenc/merino
 cd merino
 cargo install --path .
 ```
@@ -46,7 +46,7 @@ cargo install --path .
 OR
 
 ```bash
-docker image pull ghcr.io/ajmwagar/merino:latest
+docker image pull ghcr.io/aveyrenc/merino:latest
 ```
 
 ### Usage
@@ -65,7 +65,7 @@ merino --help
 OR
 
 ```bash
-docker container run --pull=always --name=merino -p=8001:8001 ghcr.io/ajmwagar/merino:latest --no-auth --port=8001
+docker container run --pull=always --name=merino -p=8001:8001 ghcr.io/aveyrenc/merino:latest --no-auth --port=8001
 ```
 
 # 🚥 Roadmap
