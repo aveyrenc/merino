@@ -4,7 +4,7 @@
 #[macro_use]
 extern crate log;
 
-use clap::{ArgGroup, Parser};
+use clap::{ArgAction, ArgGroup, Parser};
 use merino::*;
 use std::env;
 use std::error::Error;
@@ -27,7 +27,7 @@ const LOGO: &str = r"
 #[clap(group(
     ArgGroup::new("auth")
         .required(true)
-        .args(&["no-auth", "users"]),
+        .args(&["no_auth", "users"]),
 ), group(
     ArgGroup::new("log")
         .args(&["verbosity", "quiet"]),
@@ -59,7 +59,7 @@ struct Opt {
 
     /// Log verbosity level. -vv for more verbosity.
     /// Environmental variable `RUST_LOG` overrides this flag!
-    #[clap(short, parse(from_occurrences))]
+    #[clap(short, action = ArgAction::Count)]
     verbosity: u8,
 
     /// Do not output any logs (even errors!). Overrides `RUST_LOG`
@@ -195,4 +195,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     merino.serve().await;
 
     Ok(())
+}
+
+#[test]
+fn verify_opt(){
+    use clap::CommandFactory;
+    Opt::command().debug_assert()
 }
