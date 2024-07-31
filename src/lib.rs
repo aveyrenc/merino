@@ -5,6 +5,8 @@ extern crate serde_derive;
 extern crate log;
 use snafu::Snafu;
 
+use std::error::Error;
+use std::future::Future;
 use std::io;
 use std::net::{Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};
 use std::sync::Arc;
@@ -669,4 +671,46 @@ impl SOCKSReq {
             port,
         })
     }
+}
+
+// Signal handlers
+#[cfg(target_family = "unix")]
+async fn wait_for_shutdown_impl(server: impl Future<Output = ()>) -> Result<(), Box<dyn Error>> {
+    use tokio::signal::unix::{signal, SignalKind};
+
+    let mut sigint = signal(SignalKind::interrupt())?;
+    let mut sigterm = signal(SignalKind::terminate())?;
+
+    tokio::select! {
+        _ = server=>debug!("Server stopped"),
+        _ = sigint.recv()=>debug!("Received SIGINT"),
+        _ = sigterm.recv()=>debug!("Received SIGTERM"),
+    };
+
+    Ok(())
+}
+
+#[cfg(target_family = "windows")]
+async fn wait_for_shutdown_impl(server: impl Future<Output = ()>) -> Result<(), Box<dyn Error>> {
+    use tokio::signal::windows;
+
+    let mut sig_ctrl_c = windows::ctrl_c()?;
+    let mut sig_ctrl_break = windows::ctrl_break()?;
+    let mut sig_ctrl_close = windows::ctrl_close()?;
+    let mut sig_ctrl_shutdown = windows::ctrl_shutdown()?;
+
+    tokio::select! {
+        _ = server=>debug!("Server stopped"),
+        _ = sig_ctrl_c.recv()=>debug!("Received CTRL_C"),
+        _ = sig_ctrl_break.recv()=>debug!("Received CTRL_BREAK"),
+        _ = sig_ctrl_close.recv()=>debug!("Received CTRL_CLOSE"),
+        _ = sig_ctrl_shutdown.recv()=>debug!("Received CTRL_SHUTDOWN"),
+    };
+
+    Ok(())
+}
+
+// Dispatch to platform specific signal handler
+pub async fn wait_for_shutdown(server: impl Future<Output = ()>) -> Result<(), Box<dyn Error>> {
+    wait_for_shutdown_impl(server).await
 }
