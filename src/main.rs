@@ -192,13 +192,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut merino = Merino::new(opt.port, &opt.ip, auth_methods, authed_users, timeout).await?;
 
     // Start Proxies
-    merino.serve().await;
+    let server = merino.serve();
 
-    Ok(())
+    // Wait for shutdown
+    merino::wait_for_shutdown(server).await
 }
 
 #[test]
-fn verify_opt(){
+fn verify_opt() {
     use clap::CommandFactory;
     Opt::command().debug_assert()
 }

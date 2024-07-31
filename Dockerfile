@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM rust:alpine3.20 as builder
+FROM rust:alpine3.20 AS builder
 RUN apk add --no-cache build-base
 
 # Don't download the entire crates.io package index. Fetch only the index
@@ -15,8 +15,7 @@ RUN cargo build --release
 
 FROM alpine:3.20
 RUN addgroup -S merino && \
-    adduser -S -G merino merino && \
-    apk add --no-cache tini
+    adduser -S -G merino merino
 USER merino
 COPY --from=builder /app/target/release/merino /usr/local/bin/merino
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/merino"]
+ENTRYPOINT ["/usr/local/bin/merino"]
