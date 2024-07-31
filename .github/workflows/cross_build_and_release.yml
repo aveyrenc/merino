@@ -242,5 +242,5 @@ jobs:
         with:
           draft: true
           files: "${{ github.event.repository.name }}-*"
-          body_path: Changes.md
+          generate_release_notes: true
         if: matrix.toolchain == 'stable' && startsWith( github.ref, 'refs/tags/v' )
