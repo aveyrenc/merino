@@ -109,20 +109,20 @@ jobs:
             skip_tests: true
 
           - os_name: macOS-x86_64
-            os: macos-12
+            os: macos-14
             target: x86_64-apple-darwin
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-macOS-x86_64-apple-darwin.tar.gz
 
           - os_name: macOS-aarch64
-            os: macos-12
+            os: macos-14
             target: aarch64-apple-darwin
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-macOS-aarch64-apple-darwin.tar.gz
             skip_tests: true
 
           - os_name: IOS-aarch64
-            os: macos-12
+            os: macos-14
             target: aarch64-apple-ios
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-Apple-aarch64-apple-ios.tar.gz
