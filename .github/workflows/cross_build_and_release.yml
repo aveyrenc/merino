@@ -163,7 +163,7 @@ jobs:
         if: contains(matrix.platform.target, 'aarch64-linux-android')
 
       - name: Build binary
-        uses: houseabsolute/actions-rust-cross@v0
+        uses: houseabsolute/actions-rust-cross@v1
         with:
           command: "build"
           target: ${{ matrix.platform.target }}
