@@ -27,62 +27,62 @@ jobs:
           # TEST:
 
           - os_name: Linux-x86_64-musl
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: x86_64-unknown-linux-musl
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-x86_64-unknown-linux-musl.tar.gz
 
           - os_name: Linux-x86_64-gnu
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-x86_64-unknown-linux-gnu.tar.gz
 
           - os_name: Linux-aarch64
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-aarch64-unknown-linux-gnu.tar.gz
 
           - os_name: Linux-arm-musleabi
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: arm-unknown-linux-musleabi
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-arm-unknown-linux-musleabi.tar.gz
 
           - os_name: Linux-arm-gnueabihf
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: arm-unknown-linux-gnueabihf
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-arm-unknown-linux-gnueabihf.tar.gz
 
           - os_name: armv7-unknown-linux-gnueabi
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: armv7-unknown-linux-gnueabi
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-armv7-unknown-linux-gnueabi.tar.gz
 
           - os_name: Linux-armv7-musleabi
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: armv7-unknown-linux-musleabi
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-armv7-unknown-linux-musleabi.tar.gz
 
           - os_name: Linux-i686-musl
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: i686-unknown-linux-musl
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-i686-unknown-linux-musl.tar.gz
             skip_tests: true
 
           - os_name: Linux-riscv64
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: riscv64gc-unknown-linux-gnu
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-riscv64gc-unknown-linux-gnu.tar.gz
 
           - os_name: FreeBSD-x86_64
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: x86_64-unknown-freebsd
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-x86_64-unknown-freebsd.tar.gz
@@ -109,39 +109,39 @@ jobs:
             skip_tests: true
 
           - os_name: macOS-x86_64
-            os: macos-14
+            os: macos-15
             target: x86_64-apple-darwin
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-macOS-x86_64-apple-darwin.tar.gz
 
           - os_name: macOS-aarch64
-            os: macos-14
+            os: macos-15
             target: aarch64-apple-darwin
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-macOS-aarch64-apple-darwin.tar.gz
             skip_tests: true
 
           - os_name: IOS-aarch64
-            os: macos-14
+            os: macos-15
             target: aarch64-apple-ios
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-Apple-aarch64-apple-ios.tar.gz
             skip_tests: true
 
           - os_name: aarch64-linux-android
-            os: ubuntu-22.04
+            os: ubuntu-24.04
             target: aarch64-linux-android
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-aarch64-linux-android.tar.gz
 
           - os_name: Android-ARMv7a
-            os: ubuntu-22.04
+            os: ubuntu-24.04
             target: armv7-linux-androideabi
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-armv7-linux-androideabi.tar.gz
 
           - os_name: Android-ARMv7
-            os: ubuntu-22.04
+            os: ubuntu-24.04
             target: arm-linux-androideabi
             bin: ${{ github.event.repository.name }}
             name: ${{ github.event.repository.name }}-arm-linux-androideabi.tar.gz
