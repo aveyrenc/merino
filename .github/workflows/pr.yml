@@ -26,3 +26,15 @@ jobs:
           # https://en.wikipedia.org/wiki/X86-64#Microarchitecture_levels
           platforms: linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/arm64
           pull: true
+
+  dependabot:
+    name: "Dependabot auto-merge"
+    needs: [should_build]
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}} # Detect that the PR author is dependabot
+    steps:
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
