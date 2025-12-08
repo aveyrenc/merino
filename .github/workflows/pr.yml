@@ -4,10 +4,6 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   should_build:
     runs-on: ubuntu-latest
@@ -35,9 +31,7 @@ jobs:
     name: "Dependabot auto-merge"
     needs: [should_build]
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: read
+    permissions: write-all
     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}} # Detect that the PR author is dependabot
     steps:
       - name: Enable auto-merge for Dependabot PRs
