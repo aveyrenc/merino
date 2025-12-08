@@ -13,7 +13,7 @@ COPY Cargo.toml Cargo.lock ./
 COPY src/ src/
 RUN cargo build --release
 
-FROM alpine:3.20
+FROM alpine:3.23
 RUN addgroup -S merino && \
     adduser -S -G merino merino
 USER merino
