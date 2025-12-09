@@ -54,7 +54,7 @@ struct Opt {
     users: Option<PathBuf>,
 
     #[clap(short, long, default_value_t = 1000)]
-    /// Timeout in miliseconds
+    /// Timeout in milliseconds
     timeout: u64,
 
     /// Log verbosity level. -vv for more verbosity.
@@ -77,7 +77,7 @@ pub mod details {
         allow_insecure: &bool,
         users_file: &std::path::PathBuf,
     ) {
-        // 7 is (S_IROTH | S_IWOTH | S_IXOTH) or the "permisions for others" in unix
+        // 7 is (S_IROTH | S_IWOTH | S_IXOTH) or the "permissions for others" in unix
         if (metadata.mode() & 7) > 0 && !allow_insecure {
             error!(
                 "Permissions {:o} for {:?} are too open. \
@@ -128,7 +128,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     if log_env.is_ok() && (opt.verbosity != 0) {
         warn!(
-            "Log level is overriden by environmental variable to `{}`",
+            "Log level is overridden by environmental variable to `{}`",
             // It's safe to unwrap() because we checked for is_ok() before
             log_env.unwrap().as_str()
         );

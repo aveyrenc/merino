@@ -4,7 +4,7 @@ use merino::*;
 
 #[tokio::test]
 /// Can we crate a new `Merino` instance
-async fn merino_contructor() {
+async fn merino_constructor() {
     assert!(Merino::new(
         1080,
         "127.0.0.1",

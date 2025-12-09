@@ -173,7 +173,7 @@ impl AddrType {
 enum SockCommand {
     Connect = 0x01,
     Bind = 0x02,
-    UdpAssosiate = 0x3,
+    UdpAssociate = 0x3,
 }
 
 impl SockCommand {
@@ -182,7 +182,7 @@ impl SockCommand {
         match n {
             1 => Some(SockCommand::Connect),
             2 => Some(SockCommand::Bind),
-            3 => Some(SockCommand::UdpAssosiate),
+            3 => Some(SockCommand::UdpAssociate),
             _ => None,
         }
     }
@@ -350,7 +350,7 @@ where
     async fn auth(&mut self) -> Result<(), MerinoError> {
         debug!("Authenticating");
         // Get valid auth methods
-        let methods = self.get_avalible_methods().await?;
+        let methods = self.get_available_methods().await?;
         trace!("methods: {:?}", methods);
 
         let mut response = [0u8; 2];
@@ -473,15 +473,15 @@ where
                 std::io::ErrorKind::Unsupported,
                 "Bind not supported",
             ))),
-            SockCommand::UdpAssosiate => Err(MerinoError::Io(std::io::Error::new(
+            SockCommand::UdpAssociate => Err(MerinoError::Io(std::io::Error::new(
                 std::io::ErrorKind::Unsupported,
-                "UdpAssosiate not supported",
+                "UdpAssociate not supported",
             ))),
         }
     }
 
-    /// Return the avalible methods based on `self.auth_nmethods`
-    async fn get_avalible_methods(&mut self) -> io::Result<Vec<u8>> {
+    /// Return the available methods based on `self.auth_nmethods`
+    async fn get_available_methods(&mut self) -> io::Result<Vec<u8>> {
         let mut methods: Vec<u8> = Vec::with_capacity(self.auth_nmethods as usize);
         for _ in 0..self.auth_nmethods {
             let mut method = [0u8; 1];
