@@ -113,25 +113,33 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Setup logging
     let log_env = env::var("RUST_LOG");
-    if log_env.is_err() {
-        let level = match opt.verbosity {
-            1 => "merino=DEBUG",
-            2 => "merino=TRACE",
-            _ => "merino=INFO",
-        };
-        env::set_var("RUST_LOG", level);
-    }
 
     if !opt.quiet {
-        pretty_env_logger::init_timed();
-    }
+        let mut builder = pretty_env_logger::formatted_timed_builder();
 
-    if log_env.is_ok() && (opt.verbosity != 0) {
-        warn!(
-            "Log level is overridden by environmental variable to `{}`",
-            // It's safe to unwrap() because we checked for is_ok() before
-            log_env.unwrap().as_str()
-        );
+        match log_env {
+            Ok(ref log_filter) => {
+                // Parse RUST_LOG if it's set
+                builder.parse_filters(log_filter);
+                if opt.verbosity != 0 {
+                    warn!(
+                        "Log level is overridden by environmental variable to `{}`",
+                        log_filter
+                    );
+                }
+            }
+            Err(_) => {
+                // Set log level based on verbosity if RUST_LOG is not set
+                let level = match opt.verbosity {
+                    1 => log::LevelFilter::Debug,
+                    2 => log::LevelFilter::Trace,
+                    _ => log::LevelFilter::Info,
+                };
+                builder.filter_module("merino", level);
+            }
+        }
+
+        builder.init();
     }
 
     // Setup Proxy settings
