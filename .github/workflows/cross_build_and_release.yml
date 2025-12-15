@@ -224,7 +224,7 @@ jobs:
             github.ref == 'refs/tags/test-release' )
 
       - name: Publish release artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ github.event.repository.name }}-${{ matrix.platform.os_name }}
           path: "${{ github.event.repository.name }}-*"
