@@ -22,4 +22,4 @@ serde = "1.0.228"
 serde_derive = "1.0.219"
 snafu = "0.8.9"
 thiserror = "2.0.17"
-tokio = { version = "1.48.0", features = ["full"] }
+tokio = { version = "1.49.0", features = ["full"] }
